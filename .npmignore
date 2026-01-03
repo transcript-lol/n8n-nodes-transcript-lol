@@ -1,0 +1,8 @@
+nodes/
+credentials/
+*.ts
+!dist/**
+tsconfig.json
+eslint.config.mjs
+.github/
+.gitignore

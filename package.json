@@ -1,0 +1,60 @@
+{
+  "name": "n8n-nodes-transcript-lol",
+  "version": "0.1.0",
+  "description": "n8n community node for Transcript.lol - AI-powered audio and video transcription service",
+  "keywords": [
+    "n8n-community-node-package",
+    "n8n",
+    "transcription",
+    "audio",
+    "video",
+    "speech-to-text",
+    "ai"
+  ],
+  "license": "MIT",
+  "homepage": "https://transcript.lol",
+  "author": {
+    "name": "Transcript.lol",
+    "email": "support@transcript.lol"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/transcript-lol/n8n-nodes-transcript-lol.git"
+  },
+  "engines": {
+    "node": ">=22.0"
+  },
+  "main": "dist/nodes/TranscriptLol/TranscriptLol.node.js",
+  "scripts": {
+    "build": "tsc && npm run copy:icons",
+    "copy:icons": "cp -r nodes/TranscriptLol/*.png dist/nodes/TranscriptLol/ 2>/dev/null || true",
+    "dev": "n8n-node-cli dev",
+    "lint": "eslint nodes credentials",
+    "lint:fix": "eslint nodes credentials --fix",
+    "prepublishOnly": "npm run build"
+  },
+  "files": [
+    "dist"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": [
+      "dist/credentials/TranscriptLolOAuth2Api.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/TranscriptLol/TranscriptLol.node.js",
+      "dist/nodes/TranscriptLol/TranscriptLolTrigger.node.js"
+    ]
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "eslint": "^8.57.0",
+    "n8n-workflow": "^1.69.0",
+    "typescript": "^5.6.0"
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  }
+}
