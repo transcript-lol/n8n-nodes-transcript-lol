@@ -1,6 +1,8 @@
 import {
 	IExecuteFunctions,
+	ILoadOptionsFunctions,
 	INodeExecutionData,
+	INodePropertyOptions,
 	INodeType,
 	INodeTypeDescription,
 	IHttpRequestMethods,
@@ -133,9 +135,12 @@ export class TranscriptLol implements INodeType {
 			},
 			// Fields for Recording Create
 			{
-				displayName: 'Workspace ID',
+				displayName: 'Workspace',
 				name: 'workspaceId',
-				type: 'string',
+				type: 'options',
+				typeOptions: {
+					loadOptionsMethod: 'getWorkspaces',
+				},
 				required: true,
 				displayOptions: {
 					show: {
@@ -144,7 +149,7 @@ export class TranscriptLol implements INodeType {
 					},
 				},
 				default: '',
-				description: 'The ID of the workspace',
+				description: 'The workspace to use',
 			},
 			{
 				displayName: 'Recording ID',
@@ -314,9 +319,12 @@ export class TranscriptLol implements INodeType {
 			},
 			// Fields for Transcript Get
 			{
-				displayName: 'Workspace ID',
+				displayName: 'Workspace',
 				name: 'workspaceId',
-				type: 'string',
+				type: 'options',
+				typeOptions: {
+					loadOptionsMethod: 'getWorkspaces',
+				},
 				required: true,
 				displayOptions: {
 					show: {
@@ -325,7 +333,7 @@ export class TranscriptLol implements INodeType {
 					},
 				},
 				default: '',
-				description: 'The ID of the workspace',
+				description: 'The workspace to use',
 			},
 			{
 				displayName: 'Recording ID',
@@ -363,6 +371,27 @@ export class TranscriptLol implements INodeType {
 				],
 			},
 		],
+	};
+
+	methods = {
+		loadOptions: {
+			async getWorkspaces(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
+				const workspaces = await this.helpers.httpRequestWithAuthentication.call(
+					this,
+					'transcriptLolOAuth2Api',
+					{
+						method: 'GET' as IHttpRequestMethods,
+						url: 'https://transcript.lol/api/v1/spaces',
+						json: true,
+					},
+				);
+
+				return (workspaces as Array<{ id: string; name: string }>).map((workspace) => ({
+					name: workspace.name,
+					value: workspace.id,
+				}));
+			},
+		},
 	};
 
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
