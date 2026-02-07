@@ -40,14 +40,24 @@ Listen for events from Transcript.lol:
 
 ## Credentials
 
-This node uses OAuth2 authentication:
+This node uses OAuth2 with PKCE (Proof Key for Code Exchange) for secure authentication. No client secret is required — the integration uses a public client ID (`tlol_n8n_client`) and relies on PKCE's cryptographic code challenge/verifier exchange to secure the authorization flow.
+
+### Setup
 
 1. In n8n, create new credentials for "Transcript.lol OAuth2 API"
-2. Click "Connect my account" to authorize with your Transcript.lol account
+2. Click "Connect my account" — n8n will automatically handle the PKCE flow
 3. Sign in to your [Transcript.lol account](https://transcript.lol) and authorize the connection
 4. Once authorized, you can use the node in your workflows
 
-The OAuth2 flow will obtain an access token that is automatically used as a Bearer token for all API requests.
+### How It Works
+
+1. n8n generates a random `code_verifier` and derives a `code_challenge` (SHA-256 hash)
+2. The `code_challenge` is sent with the authorization request to Transcript.lol
+3. After you authorize, n8n sends the original `code_verifier` to the token endpoint
+4. Transcript.lol verifies that `SHA256(code_verifier)` matches the stored `code_challenge`
+5. On success, an access token (Bearer token) is issued and used for all API requests
+
+This approach eliminates the need for a shared client secret, making it safe for the credential configuration to be distributed as part of a community node.
 
 **Note:** You need to be on the Unlimited Plan to use the n8n integration.
 

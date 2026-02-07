@@ -7,13 +7,13 @@ export class TranscriptLolOAuth2Api implements ICredentialType {
 	name = 'transcriptLolOAuth2Api';
 	extends = ['oAuth2Api'];
 	displayName = 'Transcript.lol OAuth2 API';
-	documentationUrl = 'https://transcript.lol/docs/api';
+	documentationUrl = 'https://help.transcript.lol/en/help/articles/5667686-n8n-integration';
 	properties: INodeProperties[] = [
 		{
 			displayName: 'Grant Type',
 			name: 'grantType',
 			type: 'hidden',
-			default: 'authorizationCode',
+			default: 'pkce',
 		},
 		{
 			displayName: 'Authorization URL',
@@ -37,7 +37,7 @@ export class TranscriptLolOAuth2Api implements ICredentialType {
 			displayName: 'Client Secret',
 			name: 'clientSecret',
 			type: 'hidden',
-			default: 'tlol_n8n_secret',
+			default: '',
 		},
 		{
 			displayName: 'Scope',

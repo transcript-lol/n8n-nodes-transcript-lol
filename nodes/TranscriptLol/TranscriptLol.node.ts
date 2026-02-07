@@ -535,13 +535,13 @@ export class TranscriptLol implements INodeType {
         }
 
         if (Array.isArray(responseData)) {
-          returnData.push(...responseData.map((data) => ({ json: data })));
+          returnData.push(...responseData.map((data) => ({ json: data, pairedItem: { item: i } })));
         } else if (responseData !== undefined) {
-          returnData.push({ json: responseData });
+          returnData.push({ json: responseData, pairedItem: { item: i } });
         }
       } catch (error) {
         if (this.continueOnFail()) {
-          returnData.push({ json: { error: (error as Error).message } });
+          returnData.push({ json: { error: (error as Error).message }, pairedItem: { item: i } });
           continue;
         }
         throw new NodeOperationError(this.getNode(), error as Error, {
