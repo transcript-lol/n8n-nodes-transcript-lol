@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-transcript-lol",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "n8n community node for Transcript.lol - AI-powered audio and video transcription service",
   "keywords": [
     "n8n-community-node-package",
@@ -27,11 +27,12 @@
   "main": "dist/nodes/TranscriptLol/TranscriptLol.node.js",
   "scripts": {
     "build": "tsc && npm run copy:icons",
-    "copy:icons": "cp -r nodes/TranscriptLol/*.png dist/nodes/TranscriptLol/ 2>/dev/null || true",
+    "copy:icons": "cp -r nodes/TranscriptLol/*.png dist/nodes/TranscriptLol/ 2>/dev/null || true && mkdir -p dist/credentials && cp nodes/TranscriptLol/transcript-lol.png dist/credentials/ 2>/dev/null || true",
     "dev": "n8n-node-cli dev",
     "lint": "eslint nodes credentials",
     "lint:fix": "eslint nodes credentials --fix",
-    "prepublishOnly": "npm run build"
+    "scan": "scan-community-package n8n-nodes-transcript-lol",
+    "prepublishOnly": "npm run build && npm run scan"
   },
   "files": [
     "dist"
@@ -51,6 +52,7 @@
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
     "eslint": "^8.57.0",
+    "@n8n/scan-community-package": "^0.10.0",
     "n8n-workflow": "^1.69.0",
     "typescript": "^5.6.0"
   },

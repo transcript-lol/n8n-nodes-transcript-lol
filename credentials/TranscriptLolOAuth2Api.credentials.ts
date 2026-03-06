@@ -7,6 +7,7 @@ export class TranscriptLolOAuth2Api implements ICredentialType {
 	name = 'transcriptLolOAuth2Api';
 	extends = ['oAuth2Api'];
 	displayName = 'Transcript.lol OAuth2 API';
+	icon = 'file:transcript-lol.png' as const;
 	documentationUrl = 'https://help.transcript.lol/en/help/articles/5667686-n8n-integration';
 	properties: INodeProperties[] = [
 		{

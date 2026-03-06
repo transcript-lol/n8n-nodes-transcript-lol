@@ -29,13 +29,6 @@ export class TranscriptLol implements INodeType {
         required: true,
       },
     ],
-    requestDefaults: {
-      baseURL: "https://transcript.lol/api/v1",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    },
     properties: [
       {
         displayName: "Resource",
